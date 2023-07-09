@@ -27,6 +27,7 @@ public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
 
+    // 목록
     @Override
     public PageResponseDTO<TodoDTO> getList() {
         Pageable pageable = PageRequest.of(0, 20, Sort.by("tno").descending());
@@ -44,6 +45,21 @@ public class TodoServiceImpl implements TodoService {
         // return response;
         return null;
 
+    }
+
+    // 등록
+    @Override
+    public TodoDTO register(TodoDTO dto) {
+        // dto를 Todo로 변환해서 그 값을 entity에 저장
+		// tno를 가지고 있지 않은 Todo
+        Todo entity = modelMapper.map(dto, Todo.class); 
+				
+        // 번호가 들어있는 Todo - autoIncrement를 해줘서 db에 저장될 tno값이 생성됨
+        // entity를 db에 저장하고 그 값을 result에 저장
+        Todo result = todoRepository.save(entity);
+        
+        // result 값을 TodoDTO로 변환을 해서 화면에 출력 대기
+        return modelMapper.map(result,TodoDTO.class);
     }
 
 
