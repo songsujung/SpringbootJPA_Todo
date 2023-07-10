@@ -1,6 +1,7 @@
 package com.example.sj1.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -60,6 +61,25 @@ public class TodoServiceImpl implements TodoService {
         
         // result 값을 TodoDTO로 변환을 해서 화면에 출력 대기
         return modelMapper.map(result,TodoDTO.class);
+    }
+
+    // 조회
+    @Override
+    public TodoDTO getOne(Long tno) {
+        Optional<Todo> result = todoRepository.findById(tno);
+        
+        Todo todo = result.orElseThrow();
+
+        TodoDTO dto = modelMapper.map(todo, TodoDTO.class);
+
+        return dto;
+    }
+
+    // 삭제
+    @Override
+    public void remove(Long tno) {
+
+        todoRepository.deleteById(tno);
     }
 
 

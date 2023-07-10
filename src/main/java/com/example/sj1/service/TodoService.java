@@ -13,5 +13,11 @@ public interface TodoService {
 
     // 등록
     TodoDTO register(TodoDTO dto);
+
+    // 조회
+    TodoDTO getOne (Long tno);
+
+    // 삭제
+    void remove(Long tno);
  
 }
